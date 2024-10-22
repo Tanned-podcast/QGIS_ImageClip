@@ -8,6 +8,8 @@
 GDALでGCP合わせてGeoTIFFに変換
 QGISに読み込んで張り付ける
 切り取るためのポリゴンをPolygonGenerationでQGIS上で生成
+ポリゴンを地物編集のコピペで置いていく　さらにスケーリングで0.8とか0.5とかの値を入れて大きさ編集
+
 同一レイヤ上にポリゴンを置いたのでこれを別レイヤに分ける Polygon2MultiLayer
 各レイヤでクリップしてデータ作成　PNGOutput
 

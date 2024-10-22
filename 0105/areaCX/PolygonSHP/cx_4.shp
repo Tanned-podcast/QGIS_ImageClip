@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "cx_4",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::4612" } },
+"features": [
+{ "type": "Feature", "properties": { }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 136.907629800000024, 37.2059276 ], [ 136.9086298, 37.2059276 ], [ 136.9086298, 37.2069276 ], [ 136.907629800000024, 37.2069276 ], [ 136.907629800000024, 37.2059276 ] ] ] } }
+]
+}
