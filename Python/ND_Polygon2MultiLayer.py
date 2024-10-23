@@ -5,10 +5,10 @@ from qgis.core import QgsFeature, QgsVectorLayer, QgsProject, QgsVectorFileWrite
 #現在レイヤをnがついてない方のAllpolygonにすること
 #変更箇所３つ
 #出力する最初のshpファイルの通し番号を指定する
-i=0
+i=1
 #セーブする先のshpファイルの名前決め
-polygon_name=r"\nr_"
-savepath=r'C:\Users\kyohe\ishikawa_QGISimageclipPolygon\0102\areaR\PolygonSHP_nodamage'
+polygon_name=r"\ns_"
+savepath=r'C:\Users\kyohe\ishikawa_QGISimageclipPolygon\0102\areaS\PolygonSHP_nodamage'
 
 # レイヤAを取得
 layer_a = iface.activeLayer()

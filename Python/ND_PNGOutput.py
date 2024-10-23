@@ -6,14 +6,14 @@ from qgis.core import QgsRasterLayer, QgsVectorLayer, QgsProject
 #ポリゴン名は必ずアルファベットと数字の間に_入れる
 
 #始点と終点のポリゴンの番号を指定
-id_start=0
-id_end=37
+id_start=1
+id_end=10
 
-Allarea_name="areaR_all"
-rpolygon_name=r"\nr"
-polygon_name="nr_"
+Allarea_name="areaS_all"
+rpolygon_name=r"\ns"
+polygon_name="ns_"
 
-savepath=r'C:\Users\kyohe\ishikawa_QGISimageclipPolygon\0102\areaR\ClippedPNG_nodamage'
+savepath=r'C:\Users\kyohe\ishikawa_QGISimageclipPolygon\0102\areaS\ClippedPNG_nodamage'
 
 # ラスターレイヤの読み込み
 raster_layer = QgsProject.instance().mapLayersByName(Allarea_name)[0]
