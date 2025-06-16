@@ -41,7 +41,7 @@ def main():
             print(f"出力ディレクトリを作成しました: {output_folder}")        
         
         # 出力パスの作成
-        output_path = str(Path(output_folder+"/RoadBuffer_ALLAREA_"+str(buffer_width)+"m_"+road_layer_path.split("\\")[-2]+".fgb" ))
+        output_path = str(Path(output_folder+"/RoadBuffer_ALLAREA_"+str(buffer_width)+"m_"+road_layer_path.split("\\")[-1].split(".")[0]+".fgb" ))
         
         
         # 入力レイヤーの読み込み
@@ -56,7 +56,7 @@ def main():
         temp_crs = 'EPSG:6675'
         
 
-        # 再投影（メートル投影系へ）
+        # 再投影（メートル投影系へ）　CRSのDBにアクセスできませんっていうエラー出るけど正常に動くので問題なし
         print("reprojecting roadline...")
         reproj = qgis.processing.run("native:reprojectlayer", {
             'INPUT': road_layer,
