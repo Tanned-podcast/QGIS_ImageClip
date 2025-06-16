@@ -8,7 +8,7 @@ side_length = 0.001
 
 # 正方形の中心座標を指定 
 #地図上で左クリックして座標コピー，ここに貼り付け
-center_y, center_x = 37.5204183,137.2793908
+center_y, center_x = 37.493524,137.131073
 # 正方形の頂点座標を計算
 half_side = side_length / 2
 vertices = [

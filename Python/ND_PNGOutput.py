@@ -2,18 +2,18 @@ from qgis.core import QgsRasterLayer, QgsVectorLayer, QgsProject
 
 #道路ネットワーク非表示
 #事前にそのエリアの空撮画像全部マージして1枚にしておくこと
-#変更箇所6つ　ラスタレイヤ名と始点と終点ポリゴン番号とsavepathとポリゴン名
+#変更箇所6つ　ラスタレイヤ名と始点と終点ポリゴン番号とsavepathと切り取り後画像名とポリゴン名
 #ポリゴン名は必ずアルファベットと数字の間に_入れる
 
 #始点と終点のポリゴンの番号を指定
-id_start=1
-id_end=10
+id_start=30
+id_end=32
 
-Allarea_name="areaS_all"
-rpolygon_name=r"\ns"
-polygon_name="ns_"
+Allarea_name="areaO_all"
+rpolygon_name=r"\no_s_"
+polygon_name="no_s_"
 
-savepath=r'C:\Users\kyohe\ishikawa_QGISimageclipPolygon\0102\areaS\ClippedPNG_nodamage'
+savepath=r'C:\Users\kyohe\ishikawa_QGISimageclipPolygon\0102\SamePolygonSize_areaO\ClippedPNG_nodamage'
 
 # ラスターレイヤの読み込み
 raster_layer = QgsProject.instance().mapLayersByName(Allarea_name)[0]

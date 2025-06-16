@@ -7,10 +7,10 @@ from qgis.core import QgsFeature, QgsVectorLayer, QgsProject, QgsVectorFileWrite
 #出力する最初のshpファイルの通し番号を指定する
 i=0
 #セーブする先のshpファイルの名前決め
-polygon_name=r"\r_"
-savepath=r'C:\Users\kyohe\ishikawa_QGISimageclipPolygon\0102\areaR\PolygonSHP'
+polygon_name=r"\s_s_"
+savepath=r'C:\Users\kyohe\ishikawa_QGISimageclipPolygon\0102\SamePolygonSize_areaS\PolygonSHP'
 
-# レイヤAを取得
+#現在レイヤを取得
 layer_a = iface.activeLayer()
 
 #IDに応じたレイヤA内の地物を取得
