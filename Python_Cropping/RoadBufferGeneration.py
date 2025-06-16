@@ -32,7 +32,7 @@ def main():
     try:
         # 入力パラメータの設定
         road_layer_path = r"C:\Users\kyohe\北陸地方道路DRM\全道路リンク標高.shp"  # 道路中心線のShapefile
-        buffer_width = 0.0001  # バッファの幅（メートル）
+        buffer_width = 10  # バッファの幅（メートル）
         
         # 出力ディレクトリの設定（絶対パスに変更）
         output_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "RoadBuffer_ALLAREA_FGB"))
@@ -49,21 +49,45 @@ def main():
         if not road_layer.isValid():
             raise Exception("道路中心線レイヤーの読み込みに失敗しました")        
         print("loading input layers done")
+
+        #バッファ処理をメートル単位でするためにはEPSG4612ではダメ：日本測地系2011の7系に直す
+        #再投影するCRSの設定
+        original_crs = road_layer.crs().authid()
+        temp_crs = 'EPSG:6675'
         
-        ##ステップ1:バッファの作成
-        params = {
+
+        # 再投影（メートル投影系へ）
+        print("reprojecting roadline...")
+        reproj = qgis.processing.run("native:reprojectlayer", {
             'INPUT': road_layer,
+            'TARGET_CRS': temp_crs,
+            'OUTPUT': 'memory:'
+        })['OUTPUT']
+        print("roadline reprojected")
+
+        # バッファ処理
+        print("generating buffer polygon...")
+        buf = qgis.processing.run("native:buffer", {
+            'INPUT': reproj,
             'DISTANCE': buffer_width,
             'SEGMENTS': 5,
             'END_CAP_STYLE': 0,
             'JOIN_STYLE': 0,
             'MITER_LIMIT': 2,
-            'DISSOLVE': True,
-            'OUTPUT': output_path
-        }
-        
-        qgis.processing.run("native:buffer", params)
+            'DISSOLVE': False,
+            'OUTPUT': 'memory:'
+        })['OUTPUT']
         print("buffer polygon is generated")
+
+
+        # 再投影（EPSG:4612 に戻す）
+        print("reprojecting buffer...")
+        final = qgis.processing.run("native:reprojectlayer", {
+            'INPUT': buf,
+            'TARGET_CRS': original_crs,
+            'OUTPUT': output_path
+        })['OUTPUT']
+        print("buffer reprojected")
 
     except Exception as e:
         print(f"エラーが発生しました: {str(e)}")
@@ -71,7 +95,8 @@ def main():
     finally:
         # QGISアプリケーションの終了
         qgs.exitQgis()
+        print("qgis app exited")
 
 if __name__ == '__main__':
     main()
-        
+    print("program finished")
