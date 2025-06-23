@@ -6,9 +6,11 @@ from qgis.core import QgsGeometry, QgsFeature, QgsVectorLayer, QgsProject
 #0.001で200pxくらい
 side_length = 0.001  
 
+layer_name="sq_test"
+
 # 正方形の中心座標を指定 
 #地図上で左クリックして座標コピー，ここに貼り付け
-center_y, center_x = 37.493524,137.131073
+center_y, center_x = 37.1053325,136.7297793
 # 正方形の頂点座標を計算
 half_side = side_length / 2
 vertices = [
@@ -28,7 +30,7 @@ square_feature = QgsFeature()
 square_feature.setGeometry(square_geometry)
 
 # レイヤーを作成または取得
-layer_name = "AllPolygon_nf"
+#layer_name = "AllPolygon_nf"
 layer = QgsVectorLayer("Polygon?crs=EPSG:4612", layer_name, "memory")
 layer.startEditing()
 layer.addFeature(square_feature)

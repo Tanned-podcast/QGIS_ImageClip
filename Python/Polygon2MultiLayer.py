@@ -7,20 +7,21 @@ from qgis.core import QgsFeature, QgsVectorLayer, QgsProject, QgsVectorFileWrite
 #出力する最初のshpファイルの通し番号を指定する
 i=0
 #セーブする先のshpファイルの名前決め
-polygon_name=r"\s_s_"
-savepath=r'C:\Users\kyohe\ishikawa_QGISimageclipPolygon\0102\SamePolygonSize_areaS\PolygonSHP'
+polygon_name=r"\a13_rotated_test_"
+savepath=r"C:\Users\kyohe\ishikawa_QGISimageclipPolygon\misc\SqAlign_MultiWidth_a13_Test"
 
-#現在レイヤを取得
-layer_a = iface.activeLayer()
+#複数ポリゴンが入ってて分けたいレイヤの名前
+vectorlayer_name="sq_test"
+vectorlayer = QgsProject.instance().mapLayersByName(vectorlayer_name)[0]
 
 #IDに応じたレイヤA内の地物を取得
-target_features = layer_a.getFeatures()
+target_features = vectorlayer.getFeatures()
 
 
 
 for feature in target_features:
     #\を入れる文字列は必ずエスケープシークエンス無視してraw文字列にするrを使え！！！！！
-    savepath2=str(Path(savepath+polygon_name+str(i)+".shp"))
+    savepath2=str(Path(savepath+polygon_name+str(i)+".fgb"))
     i+=1
     
     #取得した地物を新しいレイヤBとして追加

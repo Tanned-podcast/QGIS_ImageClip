@@ -144,7 +144,7 @@ def main():
     try:
         # 入力パスの設定
         aerial_image_folder = r"C:\Users\kyohe\ishikawa_QGISimageclipPolygon\test_tiff"
-        buffer_all_path = r"C:\Users\kyohe\ishikawa_QGISimageclipPolygon\RoadBuffer_ALLAREA_FGB\RoadBuffer_ALLAREA_10m_北陸地方道路DRM.fgb"
+        buffer_all_path = r"C:\Users\kyohe\ishikawa_QGISimageclipPolygon\RoadBuffer_ALLAREA_FGB\RoadBuffer_ALLAREA_MultiWidth_全道路リンク標高.fgb"
         
         # 出力ディレクトリの設定
         output_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "RoadCrop_GeoTIFF"))

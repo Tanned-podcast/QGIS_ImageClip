@@ -1,8 +1,8 @@
 from qgis.core import QgsProject, QgsRasterLayer, QgsVectorLayer
 import processing
 
-rasterlayer_name="a2"
-vectorlayer_name="hokuriku_road_buffer"
+rasterlayer_name="a13"
+vectorlayer_name="全道路ノード"
 
 # 対象のラスターレイヤー名またはオブジェクト
 raster_layer = QgsProject.instance().mapLayersByName(rasterlayer_name)[0]

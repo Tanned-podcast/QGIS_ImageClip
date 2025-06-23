@@ -1,6 +1,8 @@
 import os
 import sys
 from pathlib import Path
+import math
+
 # QGISの環境設定
 qgis_path = r"C:\Program Files\QGIS 3.36.2"
 #qgis.coreに繋ぐパス
@@ -35,10 +37,10 @@ def main():
         
         # 幅員階級ごとのバッファ幅の設定
         buffer_widths = {
-            1: 13,  # 幅員階級1: 13m
-            2: 9,   # 幅員階級2: 9m
-            3: 5,   # 幅員階級3: 5m
-            4: 3    # 幅員階級4: 3m
+            1: 37,  # 幅員階級1: 13m
+            2: 33.25,   # 幅員階級2: 9m
+            3: 28.25,   # 幅員階級3: 5m
+            4: 27    # 幅員階級4: 3m
         }
         
         # 出力ディレクトリの設定（絶対パスに変更）
@@ -84,7 +86,10 @@ def main():
                 'OUTPUT': 'memory:'
             })['OUTPUT']
             
+            
             # バッファ処理
+            #バッファは片側，余裕持たす
+            buffer_width = buffer_width*math.sqrt(2)/2
             buf = qgis.processing.run("native:buffer", {
                 'INPUT': filtered,
                 'DISTANCE': buffer_width,
