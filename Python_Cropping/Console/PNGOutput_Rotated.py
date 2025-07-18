@@ -7,8 +7,8 @@ from qgis import processing
 from PIL import Image
 
 # 設定
-vector_dir = r"C:\Users\kyohe\ishikawa_QGISimageclipPolygon\misc\SqAlign_MultiWidth_a13_Test"
-raster_layer_name = 'a13'
+vector_dir = r"C:\Users\kyohe\ishikawa_QGISimageclipPolygon\RoadBuffer_Clipped"
+raster_layer_name = 'a1_clipped'
 output_dir = r"C:\Users\kyohe\ishikawa_QGISimageclipPolygon\misc\SqAlign_MultiWidth_a13_Test_PNG"
 
 # ラスタレイヤ取得

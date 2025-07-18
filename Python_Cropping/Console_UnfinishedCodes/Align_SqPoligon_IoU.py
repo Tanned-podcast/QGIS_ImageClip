@@ -2,7 +2,7 @@ from qgis.core import *
 from qgis.PyQt.QtCore import QVariant
 import math
 
-vectorlayer_name = "DRM_edited_clipped_a5_clipped"
+vectorlayer_name = "road_centerline_clipped"
 
 def create_square_polygons():
     # アクティブなレイヤーを取得
@@ -32,6 +32,7 @@ def create_square_polygons():
 
     # フィーチャを格納するリスト
     features = []
+    last_polygon_geom = None  # 直前のポリゴンのジオメトリ
 
     # 各ラインに対して処理
     for feature in layer.getFeatures():
@@ -49,13 +50,14 @@ def create_square_polygons():
             # メートルを角度に変換（概算）
             # 日本の緯度での概算：1度 ≈ 111,000メートル
             square_size_degrees = square_size_meters / 111000.0
-            interval = square_size_degrees/2  # 間隔も正方形サイズと同じにする
+            interval = square_size_degrees/2
             
             # ラインの長さを取得
             length = geom.length()
             
             # 間隔ごとにポイントを生成
             current_distance = 0
+            last_polygon_geom = None  # ラインごとにリセット
             while current_distance < length:
                 #interpolate()によって，1本の道路中心線に沿ってcurrent_distance分だけ進んだ場所の点を取得
                 point = geom.interpolate(current_distance)
@@ -93,11 +95,24 @@ def create_square_polygons():
                 
                 # ポリゴンを作成
                 square_polygon = QgsGeometry.fromPolygonXY([[point for point in rotated_points]])
+                
+                # 直前のポリゴンとIoU判定
+                if last_polygon_geom is not None:
+                    inter = last_polygon_geom.intersection(square_polygon)
+                    union = last_polygon_geom.combine(square_polygon)
+                    if not union.isEmpty():
+                        iou = inter.area() / union.area()
+                        if 0.33 <= iou <= 0.34:
+                            # 破棄して次へ
+                            current_distance += interval
+                            continue
+                
+                # 追加・更新
                 feature = QgsFeature()
                 feature.setGeometry(square_polygon)
                 features.append(feature)
-                
-                # 次の位置へ移動
+                last_polygon_geom = square_polygon
+
                 current_distance += interval
 
     # フィーチャをレイヤーに追加

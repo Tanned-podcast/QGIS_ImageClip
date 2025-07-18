@@ -5,8 +5,8 @@ from qgis.core import (
 from qgis.PyQt.QtCore import QVariant
 
 #レイヤ名前
-polygon_layer_name="sq_test"
-node_layer_name="output"
+polygon_layer_name="Square_a5_clipped"
+node_layer_name="全道路ノード_clipped_a5_clipped"
 
 #IoUがどれくらい被ってたら削除するか
 IoU_threshold=0.7

@@ -10,7 +10,7 @@ layer_name="sq_test"
 
 # 正方形の中心座標を指定 
 #地図上で左クリックして座標コピー，ここに貼り付け
-center_y, center_x = 37.1053325,136.7297793
+center_y, center_x = 37.058877,136.798091
 # 正方形の頂点座標を計算
 half_side = side_length / 2
 vertices = [

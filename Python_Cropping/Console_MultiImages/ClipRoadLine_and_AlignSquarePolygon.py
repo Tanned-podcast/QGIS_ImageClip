@@ -1,16 +1,12 @@
+#DRMの道路データを空撮GeoTIFFの範囲で切り取り（計算を軽くする），切り取った各DRMの線に対して正方形ポリゴン配置
 from qgis.core import *
-from qgis.PyQt.QtCore import QVariant
+import processing
 import math
 
-vectorlayer_name = "DRM_edited_clipped_a5_clipped"
+vectorlayer_name = "DRM_edited"  # 全域道路線レイヤ名
 
-def create_square_polygons():
-    # アクティブなレイヤーを取得
-    layer = QgsProject.instance().mapLayersByName(vectorlayer_name)[0]
-    if not layer or layer.type() != QgsMapLayer.VectorLayer:
-        print("ベクターレイヤーを選択してください。")
-        return
-
+def create_square_polygons(layer):
+    
     # 道路幅員属性のインデックスを取得
     width_field_index = layer.fields().indexOf('R22_005')
     if width_field_index == -1:
@@ -105,8 +101,49 @@ def create_square_polygons():
     
     # レイヤーをプロジェクトに追加
     QgsProject.instance().addMapLayer(square_layer)
-    
-    print("道路幅員に応じた正方形ポリゴンの作成が完了しました。")
+    square_layer.setName(f"Square_{layer.name()[11:]}")
 
-# 関数を実行
-create_square_polygons()
+    
+    print(f"{square_layer}について，道路幅員に応じた正方形ポリゴンの作成が完了しました。")
+
+
+# --- メイン処理 ---
+
+# 全域道路線レイヤ取得
+vector_layer = QgsProject.instance().mapLayersByName(vectorlayer_name)[0]
+
+# プロジェクト内のラスタレイヤ取得
+layers = QgsProject.instance().mapLayers().values()
+raster_layers = [lyr for lyr in layers if lyr.type() == QgsMapLayer.RasterLayer]
+
+clipped_vector_layers = []
+
+for raster in raster_layers:
+    # ラスタのBoundingBoxで道路線レイヤをクリッピング
+    extent = raster.extent()
+    xmin = extent.xMinimum()
+    xmax = extent.xMaximum()
+    ymin = extent.yMinimum()
+    ymax = extent.yMaximum()
+    crs = raster.crs().authid()
+    ext_str = f"{xmin},{xmax},{ymin},{ymax} [{crs}]"
+
+    params = {
+        'INPUT': vector_layer,
+        'EXTENT': ext_str,
+        'CLIP': True,
+        'OUTPUT': 'memory:'
+    }
+    res = processing.run("qgis:extractbyextent", params)
+    clipped_layer = res['OUTPUT']
+    clipped_layer.setName(f"{vector_layer.name()}_{raster.name()}")
+
+    # 結果を現在の QGIS プロジェクトへ追加
+    QgsProject.instance().addMapLayer(clipped_layer)
+    clipped_vector_layers.append(clipped_layer)
+
+for clly in clipped_vector_layers:   
+    # クリッピングしたレイヤに対して正方形ポリゴン生成
+    create_square_polygons(clly)
+
+print("全ラスタ画像範囲での道路線クリッピング＆正方形ポリゴン作成が完了しました。")
