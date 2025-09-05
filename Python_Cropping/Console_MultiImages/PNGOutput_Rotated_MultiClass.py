@@ -9,9 +9,9 @@ from qgis import processing
 from PIL import Image
 
 #Intact HouseCollapse OtherDamageクラスそれぞれに対して実行
-vector_dir = r"C:\Users\kyohe\ishikawa_QGISimageclipPolygon\0105\SqPatchPolygons\Intact"
-tif_dir = r"C:\Users\kyohe\ishikawa_QGISimageclipPolygon\0105\PatchTIFF_NotRotated\Intact"
-png_dir = r"C:\Users\kyohe\ishikawa_QGISimageclipPolygon\0105\PatchPNG\Intact"
+vector_dir = r"C:\Users\kyohe\Aerial-Photo-Classifier\20250826Data\SquarePolygons\Intact\suzu_all"
+tif_dir = r"C:\Users\kyohe\Aerial-Photo-Classifier\20250826Data\PatchTIFF_NotRotated\Intact\suzu_all"
+png_dir = r"C:\Users\kyohe\Aerial-Photo-Classifier\20250826Data\PatchPNG\Intact\suzu_all"
 
 # プロジェクト内の全ラスタレイヤを取得
 layers = QgsProject.instance().mapLayers().values()

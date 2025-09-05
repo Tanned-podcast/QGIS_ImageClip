@@ -3,7 +3,8 @@
 各範囲の分割数と分割画像の4隅座標を計算する　Driveのスプレッドシート
 座標打ち込み.ahkで大画像を地理院からDL→Largepngに保存
 このとき四隅の座標メモ
-画像一覧の縦横サイズもImageSize2CSVで出力　
+画像一覧の縦横サイズもImageSize2CSVで出力
+その後GeoTIFF変換までをGeoReference.xlsxで行う
 画像の縦横サイズと四隅の座標からVBA使ってGCPファイル作成
 GDALでGCP合わせてGeoTIFFに変換
 QGISに読み込んで張り付ける
@@ -21,3 +22,4 @@ areaBはこれ以上東側とか調べようとすると雲がひどくて被害
 
 
 powerrenameで一気にファイル複数名前変えられる　nodamageはdamageのshpコピペして名前変えて位置ずらせ
+

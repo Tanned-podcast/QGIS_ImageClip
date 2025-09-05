@@ -4,17 +4,17 @@ from qgis.core import *
 import re
 from pathlib import Path
 
-output_dir_intact =  r"C:\Users\kyohe\ishikawa_QGISimageclipPolygon\0105\SqPatchPolygons\Intact"
-output_dir_house = r"C:\Users\kyohe\ishikawa_QGISimageclipPolygon\0105\SqPatchPolygons\HouseCollapse"
-output_dir_otherdamage =  r"C:\Users\kyohe\ishikawa_QGISimageclipPolygon\0105\SqPatchPolygons\OtherDamage"
+output_dir_intact =  r"C:\Users\kyohe\Aerial-Photo-Classifier\20250826Data\SquarePolygons\Intact\suzu_all"
+#output_dir_house = r"C:\Users\kyohe\Aerial-Photo-Classifier\20250826Data\SquarePolygons\house_collapse"
+#output_dir_otherdamage =  r"C:\Users\kyohe\ishikawa_QGISimageclipPolygon\0105\SqPatchPolygons\OtherDamage"
 
 # 出力ディレクトリがなければ作成
 if not os.path.exists(output_dir_intact):
     os.makedirs(output_dir_intact)
-if not os.path.exists(output_dir_house):
-    os.makedirs(output_dir_house)
-if not os.path.exists(output_dir_otherdamage):
-    os.makedirs(output_dir_otherdamage)
+#if not os.path.exists(output_dir_house):
+   # os.makedirs(output_dir_house)
+#if not os.path.exists(output_dir_otherdamage):
+   # os.makedirs(output_dir_otherdamage)
 
 # プロジェクト内のベクタレイヤを取得　被害ありなしで分けた後の正方形ポリゴンのみ
 layers = QgsProject.instance().mapLayers().values()
@@ -43,7 +43,7 @@ def Divide_SqPolygons(layer, output_dir, damage_class:str):
         mem_layer_data.addFeature(feature)
         mem_layer.updateExtents()
         # 出力ファイル名
-        out_path = str(Path(output_dir) + "/" + f"{layer_id}_" + damage_class + f"_{i}.fgb")
+        out_path = str(Path(output_dir + "/" + f"{layer_id}_" + damage_class + f"_{i}.fgb"))
         # 保存
         QgsVectorFileWriter.writeAsVectorFormat(mem_layer, out_path, 'UTF-8', mem_layer.crs(), 'FlatGeobuf')
         print(f'保存: {out_path}')
@@ -55,5 +55,5 @@ def Layers_Loop(layers, output_dir, damage_class):
         Divide_SqPolygons(ly, output_dir, damage_class)
 
 Layers_Loop(intact_layers, output_dir_intact, "Intact")
-Layers_Loop(house_layers, output_dir_house, "HouseCollapse")
-Layers_Loop(otherdamage_layers, output_dir_otherdamage, "OtherDamage")
+#Layers_Loop(house_layers, output_dir_house, "HouseCollapse")
+#Layers_Loop(otherdamage_layers, output_dir_otherdamage, "OtherDamage")

@@ -1,9 +1,11 @@
 #DRMの道路データを空撮GeoTIFFの範囲で切り取り（計算を軽くする），切り取った各DRMの線に対して正方形ポリゴン配置
+#DRMの道路データのうち，同一地物内で線が途切れてたりがあるとエラー吐くので注意
+#エラー吐いた場合はどの地物がおかしくなってるのか，fidをprintさせていって止まったところの地物を直す
 from qgis.core import *
 import processing
 import math
 
-vectorlayer_name = "DRM_edited"  # 全域道路線レイヤ名
+vectorlayer_name = "DRM珠洲都市計画区域"  # 全域道路線レイヤ名
 
 def create_square_polygons(layer):
     
@@ -32,6 +34,11 @@ def create_square_polygons(layer):
     # 各ラインに対して処理
     for feature in layer.getFeatures():
         geom = feature.geometry()
+        #print(feature.id())
+
+        if geom is None or geom.isNull():
+            continue  # ジオメトリが null または空ならスキップ
+        
         if geom.type() == QgsWkbTypes.LineGeometry:
             # 道路幅員を取得
             road_width = feature.attribute('R22_005')
@@ -60,6 +67,7 @@ def create_square_polygons(layer):
                 # 現在の点での線分の角度を計算
                 # 少し前後の点を取得してそれらから線分の角度を計算
                 offset = 0.0001  # 小さなオフセット
+                
                 point_before = geom.interpolate(max(0, current_distance - offset)).asPoint()
                 point_after = geom.interpolate(min(length, current_distance + offset)).asPoint()
                 
@@ -107,10 +115,12 @@ def create_square_polygons(layer):
     print(f"{square_layer}について，道路幅員に応じた正方形ポリゴンの作成が完了しました。")
 
 
+
 # --- メイン処理 ---
 
 # 全域道路線レイヤ取得
 vector_layer = QgsProject.instance().mapLayersByName(vectorlayer_name)[0]
+
 
 # プロジェクト内のラスタレイヤ取得
 layers = QgsProject.instance().mapLayers().values()
@@ -146,4 +156,5 @@ for clly in clipped_vector_layers:
     # クリッピングしたレイヤに対して正方形ポリゴン生成
     create_square_polygons(clly)
 
+    
 print("全ラスタ画像範囲での道路線クリッピング＆正方形ポリゴン作成が完了しました。")

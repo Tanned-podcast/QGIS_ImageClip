@@ -6,11 +6,11 @@ from qgis.core import QgsVectorFileWriter
 import math
 
 # 保存先ディレクトリ
-output_dir = r"C:\Users\kyohe\ishikawa_QGISimageclipPolygon\RoadBuffer_Clipped"
+output_dir = r"C:\Users\kyohe\Aerial-Photo-Classifier\20250826Data\RoadBuffer_Clipped"
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
-vectorlayer_name = "DRM_edited"
+vectorlayer_name = "DRM珠洲都市計画区域"
 vector_layer = QgsProject.instance().mapLayersByName(vectorlayer_name)[0]
 
 # プロジェクト内のすべてのラスターレイヤーを取得
