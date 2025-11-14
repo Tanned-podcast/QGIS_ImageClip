@@ -1,8 +1,0 @@
-{
-"type": "FeatureCollection",
-"name": "nn_21",
-"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::4612" } },
-"features": [
-{ "type": "Feature", "properties": { }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 136.896165104160218, 37.39242385706563 ], [ 136.896165104160218, 37.392723857065633 ], [ 136.8964651041602, 37.392723857065633 ], [ 136.8964651041602, 37.39242385706563 ], [ 136.896165104160218, 37.39242385706563 ] ] ] ] } }
-]
-}

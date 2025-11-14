@@ -1,8 +1,0 @@
-{
-"type": "FeatureCollection",
-"name": "na_24",
-"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::4612" } },
-"features": [
-{ "type": "Feature", "properties": { }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 136.8172242, 37.0024356 ], [ 136.818224199999975, 37.0024356 ], [ 136.818224199999975, 37.0034356 ], [ 136.8172242, 37.0034356 ], [ 136.8172242, 37.0024356 ] ] ] } }
-]
-}
