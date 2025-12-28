@@ -1,18 +1,19 @@
+#3番目に実行　被害有無分けしたAllPolygonを個別のポリゴンに分割
 #道路線に沿って配置されたポリゴンが入ったベクタレイヤで，各ポリゴンを個別のFGBファイルに出力
 import os
 from qgis.core import *
 import re
 from pathlib import Path
 
-output_dir_intact =  r"C:\Users\kyohe\Aerial-Photo-Classifier\20250826Data\SquarePolygons\Intact\suzu_all"
-#output_dir_house = r"C:\Users\kyohe\Aerial-Photo-Classifier\20250826Data\SquarePolygons\house_collapse"
+output_dir_intact =  r"C:\Users\kyohe\Aerial_Photo_Classifier\20251209Data\SquarePolygons\Intact\suzu_all"
+output_dir_house = r"C:\Users\kyohe\Aerial_Photo_Classifier\20251209Data\SquarePolygons\house_collapse\suzu_all"
 #output_dir_otherdamage =  r"C:\Users\kyohe\ishikawa_QGISimageclipPolygon\0105\SqPatchPolygons\OtherDamage"
 
 # 出力ディレクトリがなければ作成
 if not os.path.exists(output_dir_intact):
     os.makedirs(output_dir_intact)
-#if not os.path.exists(output_dir_house):
-   # os.makedirs(output_dir_house)
+if not os.path.exists(output_dir_house):
+    os.makedirs(output_dir_house)
 #if not os.path.exists(output_dir_otherdamage):
    # os.makedirs(output_dir_otherdamage)
 
@@ -55,5 +56,5 @@ def Layers_Loop(layers, output_dir, damage_class):
         Divide_SqPolygons(ly, output_dir, damage_class)
 
 Layers_Loop(intact_layers, output_dir_intact, "Intact")
-#Layers_Loop(house_layers, output_dir_house, "HouseCollapse")
+Layers_Loop(house_layers, output_dir_house, "HouseCollapse")
 #Layers_Loop(otherdamage_layers, output_dir_otherdamage, "OtherDamage")

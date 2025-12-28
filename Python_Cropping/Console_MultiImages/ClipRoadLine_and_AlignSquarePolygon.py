@@ -1,11 +1,14 @@
+#1番目に実行
 #DRMの道路データを空撮GeoTIFFの範囲で切り取り（計算を軽くする），切り取った各DRMの線に対して正方形ポリゴン配置
 #DRMの道路データのうち，同一地物内で線が途切れてたりがあるとエラー吐くので注意
 #エラー吐いた場合はどの地物がおかしくなってるのか，fidをprintさせていって止まったところの地物を直す
+#出力したポリゴンはAllPolygonに保存しとく
+
 from qgis.core import *
 import processing
 import math
 
-vectorlayer_name = "DRM珠洲都市計画区域"  # 全域道路線レイヤ名
+vectorlayer_name = "DRM_wajima_ONLYurban_NOTsunami"  # 全域道路線レイヤ名
 
 def create_square_polygons(layer):
     

@@ -1,3 +1,4 @@
+#4番目に実行
 #一つ一つバラバラの正方形ポリゴンに対して，画像を切り抜いてディレクトリに出力
 import os
 import re
@@ -9,9 +10,15 @@ from qgis import processing
 from PIL import Image
 
 #Intact HouseCollapse OtherDamageクラスそれぞれに対して実行
-vector_dir = r"C:\Users\kyohe\Aerial-Photo-Classifier\20250826Data\SquarePolygons\Intact\suzu_all"
-tif_dir = r"C:\Users\kyohe\Aerial-Photo-Classifier\20250826Data\PatchTIFF_NotRotated\Intact\suzu_all"
-png_dir = r"C:\Users\kyohe\Aerial-Photo-Classifier\20250826Data\PatchPNG\Intact\suzu_all"
+vector_dir = r"C:\Users\kyohe\Aerial_Photo_Classifier\20251209Data\SquarePolygons\house_collapse\suzu_all"
+tif_dir = r"C:\Users\kyohe\Aerial_Photo_Classifier\20251209Data\PatchTIFF_NotRotated\Damaged\suzu_all"
+png_dir = r"C:\Users\kyohe\Aerial_Photo_Classifier\20251209Data\PatchPNG\Damaged\suzu_all"
+
+# 出力ディレクトリがなければ作成
+if not os.path.exists(tif_dir):
+    os.makedirs(tif_dir)
+if not os.path.exists(png_dir):
+    os.makedirs(png_dir)
 
 # プロジェクト内の全ラスタレイヤを取得
 layers = QgsProject.instance().mapLayers().values()

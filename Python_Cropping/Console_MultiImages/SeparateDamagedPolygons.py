@@ -1,3 +1,4 @@
+# 2番目に実行、被害ありなしの分離
 # QGISのPythonコンソールで実行
 from qgis.core import QgsProject, QgsVectorLayer
 
@@ -7,7 +8,7 @@ point_layer = QgsProject.instance().mapLayersByName(point_layer_name)[0]
 
 # プロジェクト内の全ポリゴンレイヤー（IntersectionDeletedを含むもののみ）を取得
 layers = QgsProject.instance().mapLayers().values()
-polygon_layers = [lyr for lyr in layers if lyr.type() == QgsVectorLayer.VectorLayer and "Square" in lyr.name()]
+polygon_layers = [lyr for lyr in layers if lyr.type() == QgsVectorLayer.VectorLayer and "Square_LYurban_NOTsunami" in lyr.name()]
 
 for polygon_layer in polygon_layers:
     # 出力用レイヤ名をレイヤごとにユニークに
@@ -52,7 +53,7 @@ for polygon_layer in polygon_layers:
 
     # レイヤーをプロジェクトに追加
     QgsProject.instance().addMapLayer(layerC)
-    #QgsProject.instance().addMapLayer(layerD)
+    QgsProject.instance().addMapLayer(layerD)
     #QgsProject.instance().addMapLayer(layerE)
 
     print(f"{polygon_layer.name()} の処理が完了しました。C, D, Eレイヤーが追加されました。")
