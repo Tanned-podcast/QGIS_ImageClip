@@ -8,7 +8,7 @@ from qgis.core import *
 import processing
 import math
 
-vectorlayer_name = "DRM_wajima_ONLYurban_NOTsunami"  # 全域道路線レイヤ名
+vectorlayer_name = "monzen_toge_DRM_edited"  # 全域道路線レイヤ名
 
 def create_square_polygons(layer):
     

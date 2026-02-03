@@ -5,8 +5,8 @@ from qgis.core import *
 import re
 from pathlib import Path
 
-output_dir_intact =  r"C:\Users\kyohe\Aerial_Photo_Classifier\20251209Data\SquarePolygons\Intact\suzu_all"
-output_dir_house = r"C:\Users\kyohe\Aerial_Photo_Classifier\20251209Data\SquarePolygons\house_collapse\suzu_all"
+output_dir_intact =  r"C:\Users\kyohe\Aerial_Photo_Classifier\20260124Data\SquarePolygons\Intact"
+output_dir_house = r"C:\Users\kyohe\Aerial_Photo_Classifier\20260124Data\SquarePolygons\Damaged"
 #output_dir_otherdamage =  r"C:\Users\kyohe\ishikawa_QGISimageclipPolygon\0105\SqPatchPolygons\OtherDamage"
 
 # 出力ディレクトリがなければ作成

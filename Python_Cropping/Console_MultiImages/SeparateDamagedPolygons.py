@@ -2,13 +2,16 @@
 # QGISのPythonコンソールで実行
 from qgis.core import QgsProject, QgsVectorLayer
 
+
+point_layer_name = "monzen_all"
+polygon_layer_name = "Square_DRM_edited"
+
 # 点地物レイヤー
-point_layer_name = "suzu_all"
 point_layer = QgsProject.instance().mapLayersByName(point_layer_name)[0]
 
 # プロジェクト内の全ポリゴンレイヤー（IntersectionDeletedを含むもののみ）を取得
 layers = QgsProject.instance().mapLayers().values()
-polygon_layers = [lyr for lyr in layers if lyr.type() == QgsVectorLayer.VectorLayer and "Square_LYurban_NOTsunami" in lyr.name()]
+polygon_layers = [lyr for lyr in layers if lyr.type() == QgsVectorLayer.VectorLayer and polygon_layer_name in lyr.name()]
 
 for polygon_layer in polygon_layers:
     # 出力用レイヤ名をレイヤごとにユニークに

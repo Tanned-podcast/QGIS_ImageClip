@@ -161,9 +161,9 @@ def main():
     # parser.add_argument('--overwrite', action='store_true', help='既存出力を上書きする')
     # args = parser.parse_args()
 
-    img_dir = r"C:\Users\kyohe\Aerial_Photo_Segmenter\Sandbox\SAM_Test\img"
-    gcp_dir = r"C:\Users\kyohe\Aerial_Photo_Segmenter\Sandbox\SAM_Test\GCP"
-    out_dir = r"C:\Users\kyohe\Aerial_Photo_Segmenter\Sandbox\SAM_Test\GeoTIFF"
+    img_dir = r"C:\Users\kyohe\ishikawa_QGIS_ImageClipPolygon\0111\LargePNG\areaU"
+    gcp_dir = r"C:\Users\kyohe\ishikawa_QGIS_ImageClipPolygon\0111\GCP\areaU"
+    out_dir = r"C:\Users\kyohe\ishikawa_QGIS_ImageClipPolygon\0111\LargeGeoTIFF"
     dst_srs = "EPSG:4612"
     gcp_srs = "EPSG:4612"
     overwrite = True
