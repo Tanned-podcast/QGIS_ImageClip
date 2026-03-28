@@ -8,20 +8,30 @@ from qgis.core import (
     QgsProject, QgsRasterLayer, QgsVectorLayer, QgsGeometry
 )
 from qgis import processing
+from datetime import datetime
+from pathlib import Path
 
 # ============ 設定セクション ============
 # クリップ用ポリゴンディレクトリ
-vector_dir = r"C:\Users\kyohe\Aerial_Photo_Classifier\20260124Data\SquarePolygons\Damaged"
+vector_dir = r"C:\Users\kyohe\Aerial_Photo_Classifier\20260326Data_TimeCalc\SquarePolygons\Damaged\suzu_all"
 
 # ターゲット画像ディレクトリ
-tif_dir = r"C:\Users\kyohe\Aerial_Photo_Classifier\20260124Data\PatchTIFF_NotRotated\Damaged"
-png_dir = r"C:\Users\kyohe\Aerial_Photo_Classifier\20260124Data\PatchPNG\Damaged"
+tif_dir = r"C:\Users\kyohe\Aerial_Photo_Classifier\20260326Data_TimeCalc\PatchTIFF_NotRotated\Damaged"
+png_dir = r"C:\Users\kyohe\Aerial_Photo_Classifier\20260326Data_TimeCalc\PatchPNG\Damaged"
 
 # 出力CSV
-output_csv = r"C:\Users\kyohe\Aerial_Photo_Classifier\20260124Data\damaged_polygon_point_mapping.csv"
+output_csv = r"C:\Users\kyohe\Aerial_Photo_Classifier\20260326Data_TimeCalc\damaged_polygon_point_mapping_suzu.csv"
 
 # ポイントレイヤ名
-point_layer_name = "monzen_all"
+point_layer_name = "suzu_all"
+
+# 処理開始時間の記録
+resultspath = r"C:\Users\kyohe\ishikawa_QGIS_ImageClipPolygon\TimeCalc_Result\ClipImageWithPointInPolygon"
+region = "suzu"
+os.makedirs(resultspath, exist_ok=True)  # 結果保存フォルダがなければ作成
+starttime = datetime.now().strftime('%Y%m%d_%H%M%S')
+startdate = datetime.now().strftime('%Y%m%d')
+
 
 # ============ 出力ディレクトリの作成 ============
 if not os.path.exists(tif_dir):
@@ -123,8 +133,9 @@ for idx, fgb_file in enumerate(vector_files, 1):
         raster_name = raster_layer.name()
         # 簡易的な対応：raster_name がfgb_fileの先頭を含むかチェック
         polygon_base_name = os.path.splitext(fgb_file)[0]
+        polygon_front_name = polygon_base_name.split('_')[0]  # 例: a13_a.fgb → a13
         
-        if polygon_base_name in raster_name or raster_name.startswith(polygon_base_name[:3]):
+        if polygon_front_name in raster_name or raster_name.startswith(polygon_base_name[:3]):
             print(f"  画像クリッピング中: {raster_name}")
             
             clip_output = os.path.join(
@@ -188,3 +199,14 @@ except Exception as e:
 
 print(f"\n処理完了")
 print(f"ポイント検出済みポリゴン: {len([r for r in results])} 件")
+
+# 計算終了時間の取得とフォーマット
+finishtime = datetime.now().strftime('%Y%m%d_%H%M%S')
+datepath=str(Path(resultspath + f"\calc_time_{region}_{startdate}.txt"))
+
+# ファイルを新規作成し、日付を書き込む
+with open(datepath, 'w', encoding='utf-8') as f:
+    f.write(starttime)
+    f.write(finishtime)
+
+print("Calculation Finished in ", finishtime)

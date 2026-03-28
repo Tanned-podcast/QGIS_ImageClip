@@ -4,10 +4,20 @@ import os
 from qgis.core import *
 import re
 from pathlib import Path
+from datetime import datetime
 
-output_dir_intact =  r"C:\Users\kyohe\Aerial_Photo_Classifier\20260124Data\SquarePolygons\Intact"
-output_dir_house = r"C:\Users\kyohe\Aerial_Photo_Classifier\20260124Data\SquarePolygons\Damaged"
+output_dir_intact =  r"C:\Users\kyohe\Aerial_Photo_Classifier\20260326Data_TimeCalc\SquarePolygons\Intact"
+output_dir_house = r"C:\Users\kyohe\Aerial_Photo_Classifier\20260326Data_TimeCalc\SquarePolygons\Damaged"
 #output_dir_otherdamage =  r"C:\Users\kyohe\ishikawa_QGISimageclipPolygon\0105\SqPatchPolygons\OtherDamage"
+
+# 処理開始時間の記録
+resultspath = r"C:\Users\kyohe\ishikawa_QGIS_ImageClipPolygon\TimeCalc_Result\PatchPolygonDivider"
+region = "suzu"
+os.makedirs(resultspath, exist_ok=True)  # 結果保存フォルダがなければ作成
+starttime = datetime.now().strftime('%Y%m%d_%H%M%S')
+startdate = datetime.now().strftime('%Y%m%d')
+
+
 
 # 出力ディレクトリがなければ作成
 if not os.path.exists(output_dir_intact):
@@ -58,3 +68,14 @@ def Layers_Loop(layers, output_dir, damage_class):
 Layers_Loop(intact_layers, output_dir_intact, "Intact")
 Layers_Loop(house_layers, output_dir_house, "HouseCollapse")
 #Layers_Loop(otherdamage_layers, output_dir_otherdamage, "OtherDamage")
+
+# 計算終了時間の取得とフォーマット
+finishtime = datetime.now().strftime('%Y%m%d_%H%M%S')
+datepath=str(Path(resultspath + f"\calc_time_{region}_{startdate}.txt"))
+
+# ファイルを新規作成し、日付を書き込む
+with open(datepath, 'w', encoding='utf-8') as f:
+    f.write(starttime)
+    f.write(finishtime)
+
+print("Calculation Finished in ", finishtime)

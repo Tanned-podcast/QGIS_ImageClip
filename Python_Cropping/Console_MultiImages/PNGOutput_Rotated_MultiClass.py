@@ -1,4 +1,4 @@
-#4番目に実行
+#5番目に実行:Intactのみ
 #一つ一つバラバラの正方形ポリゴンに対して，画像を切り抜いてディレクトリに出力
 import os
 import re
@@ -9,10 +9,20 @@ from qgis.core import (
 from qgis import processing
 from PIL import Image
 
+from pathlib import Path
+from datetime import datetime
+
+# 処理開始時間の記録
+resultspath = r"C:\Users\kyohe\ishikawa_QGIS_ImageClipPolygon\TimeCalc_Result\PNGOutput_Rotated_MultiClass"
+region = "suzu"
+os.makedirs(resultspath, exist_ok=True)  # 結果保存フォルダがなければ作成
+starttime = datetime.now().strftime('%Y%m%d_%H%M%S')
+startdate = datetime.now().strftime('%Y%m%d')
+
 #Intact HouseCollapse OtherDamageクラスそれぞれに対して実行
-vector_dir = r"C:\Users\kyohe\Aerial_Photo_Classifier\20251209Data\SquarePolygons\house_collapse\suzu_all"
-tif_dir = r"C:\Users\kyohe\Aerial_Photo_Classifier\20251209Data\PatchTIFF_NotRotated\Damaged\suzu_all"
-png_dir = r"C:\Users\kyohe\Aerial_Photo_Classifier\20251209Data\PatchPNG\Damaged\suzu_all"
+vector_dir = r"C:\Users\kyohe\Aerial_Photo_Classifier\20260326Data_TimeCalc\SquarePolygons\Intact\suzu_all"
+tif_dir = r"C:\Users\kyohe\Aerial_Photo_Classifier\20260326Data_TimeCalc\PatchTIFF_NotRotated\Intact\suzu_all"
+png_dir = r"C:\Users\kyohe\Aerial_Photo_Classifier\20260326Data_TimeCalc\PatchPNG\Intact\suzu_all"
 
 # 出力ディレクトリがなければ作成
 if not os.path.exists(tif_dir):
@@ -98,3 +108,14 @@ for raster_layer in raster_layers:
             #print(f"Clipped Image Saved in {savepath}")
 
 print("All Images Successfully Saved")
+
+# 計算終了時間の取得とフォーマット
+finishtime = datetime.now().strftime('%Y%m%d_%H%M%S')
+datepath=str(Path(resultspath + f"\calc_time_SeparateDamagedPolygons_{region}_{startdate}.txt"))
+
+# ファイルを新規作成し、日付を書き込む
+with open(datepath, 'w', encoding='utf-8') as f:
+    f.write(starttime)
+    f.write(finishtime)
+
+print("Calculation Finished in ", finishtime)

@@ -4,11 +4,21 @@
 #エラー吐いた場合はどの地物がおかしくなってるのか，fidをprintさせていって止まったところの地物を直す
 #出力したポリゴンはAllPolygonに保存しとく
 
+from datetime import datetime
+import os
+from pathlib import Path
 from qgis.core import *
 import processing
 import math
 
-vectorlayer_name = "DRM_wajima_ONLYurban_NOTsunami_SegAdjusted — drm_wajima_onlyurban_notsunami_segadjusted"  # 全域道路線レイヤ名
+vectorlayer_name = "DRM_suzu_ONLYurban_NOTsunami"  # 全域道路線レイヤ名
+
+# 処理開始時間の記録
+resultspath = r"C:\Users\kyohe\ishikawa_QGIS_ImageClipPolygon\TimeCalc_Result\ClipRoadLine_and_AlignSquarePolygon"
+region = "suzu"
+os.makedirs(resultspath, exist_ok=True)  # 結果保存フォルダがなければ作成
+starttime = datetime.now().strftime('%Y%m%d_%H%M%S')
+startdate = datetime.now().strftime('%Y%m%d')
 
 def create_square_polygons(layer):
     
@@ -161,3 +171,14 @@ for clly in clipped_vector_layers:
 
     
 print("全ラスタ画像範囲での道路線クリッピング＆正方形ポリゴン作成が完了しました。")
+
+# 計算終了時間の取得とフォーマット
+finishtime = datetime.now().strftime('%Y%m%d_%H%M%S')
+datepath=str(Path(resultspath + f"\calc_time_{region}_{startdate}.txt"))
+
+# ファイルを新規作成し、日付を書き込む
+with open(datepath, 'w', encoding='utf-8') as f:
+    f.write(starttime)
+    f.write(finishtime)
+
+print("Calculation Finished in ", finishtime)
